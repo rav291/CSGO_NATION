@@ -1,33 +1,53 @@
 import React, { useEffect, useState } from 'react'
 import HLTV from 'hltv';
 
-const getPlayerRanking = async () => {
+// Getting player id using this fn.
+const getPlayerIdByName = async (text) => {
 
-    return await HLTV.getPlayerRanking({ startDate: '', endDate: '' })
-    // .then(res => console.log(res));
+    return await HLTV.getPlayerByName({ name: text })
+        .then(res => res.id)
+        // .then(data => console.log(data))
+        .catch(err => console.log(err));
 }
+
+//Getting player stats using id obtained from above
+const getPlayerStats = (playerId) => {
+    HLTV.getPlayerStats({ id: playerId })
+        .then(res => Object.entries(res))
+
+}
+
 
 const Search = () => {
 
-    const [name, setName] = useState([]);
-    const [rating, setRating] = useState([]);
+    const [text, setText] = useState('');
+    const [id, setId] = useState('');
+
     useEffect(() => {
-        getPlayerRanking()
-            .then(players => {
-                players.map(player => {
-                    setName()
-                })
-            })
+        getPlayerIdByName(text)
+        .then(id => setId(id))
+    }, [text, id]);
 
+    const onChange = (e) => {
+        setText(e.target.value)
+    }
 
-    }, []); // [] indicates that this side-effect will run only once.
-
+    const onSubmit = (e) => {
+        e.preventDefault();
+        setText(text);
+        console.log(text)
+    }
 
     return (
         <div>
-            1
+            <form onSubmit={onSubmit} className="player-name">
+                <input type="text" value={text} placeholder="Enter Player's in game name" onChange={onChange} />
+                <input type="Submit" defaultValue="Search"></input>
+            </form>
         </div>
     )
 }
 
 export default Search;
+
+// Why isn't the e.target.value working, rather value={text} is to be used ??
