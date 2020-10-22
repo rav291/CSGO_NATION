@@ -18,7 +18,6 @@ const getTeam = async () => {
     .catch(err => console.log(err));
 }
 
-// .then(data => console.log(data))
 
 const getEvents = async () => {
   return await HLTV.getEvents()
@@ -26,16 +25,14 @@ const getEvents = async () => {
     .catch(err => console.log(err))
 }
 
-
-
 function App() {
-  const [teamNames, setTeamNames] = useState([]);
+  const [teams, setTeams] = useState([]);
   const [events, setEvents] = useState([]);
 
 
   useEffect(() => {
     getTeam().then(teams => {
-      setTeamNames(teams.map(x => x[1].team.name));
+      setTeams(teams);
     });
 
     getEvents().then(data => {
@@ -53,7 +50,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/about" component={About} />
-            <Route exact path="/ranking" render={() => <Ranking teamNames={teamNames} />} />
+            <Route exact path="/ranking" render={() => <Ranking teams={teams} />} />
             <Route exact path="/events" render={() => <FutureEvents events={events} />} />
             <Route exact path="/search" component={Search} />
 

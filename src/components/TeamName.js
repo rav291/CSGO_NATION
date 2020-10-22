@@ -1,10 +1,14 @@
 import React from 'react'
 
-export const TeamName = ({ team }) => {
+export const TeamName = ({ place, name, points, change }) => {
+
     return (
-        <div>
-            <li className="card aladin size">{team}</li>
-        </div>
+            <tr>
+                <td>{place}</td>
+                <td>{name}</td>
+                <td>{points}</td>
+                <td>{change}</td>
+            </tr>
     )
 }
 
