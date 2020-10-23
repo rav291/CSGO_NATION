@@ -4,14 +4,17 @@ import TeamName from '../TeamName'
 
 const Ranking = ({ teams }) => {
     return (
-            <table id="ranking">
+        <table id="ranking">
+            <thead>
                 <tr>
                     <th>Rank</th>
                     <th>Name</th>
                     <th>Points</th>
                     <th>Rank Change</th>
-                    
                 </tr>
+            </thead>
+
+            <tbody>
                 {teams.map(team => (
                     <TeamName
                         key={team[1].team.id}
@@ -20,7 +23,9 @@ const Ranking = ({ teams }) => {
                         place={team[1].place}
                         change={team[1].change} />
                 ))}
-            </table>
+            </tbody>
+
+        </table>
     )
 }
 
